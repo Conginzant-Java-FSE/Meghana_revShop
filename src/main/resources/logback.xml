@@ -1,13 +1,37 @@
-<configuration>
+<?xml version="1.0" encoding="UTF-8" ?>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<configuration scan="true" scanPeriod="30 seconds">
+    <property name ="LOG_PATH"  value="logs/"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+
         <encoder>
-            <pattern>%d{HH:mm:ss} %-5level %logger - %msg%n</pattern>
+            <pattern>
+                <!--                %d{HH:mm:ss:SSS} [%thread] %-5level %logger{36} -%msg%n-->
+                %d{HH:mm:ss} [%thread] %-5level %logger{36} -%msg%n
+
+
+            </pattern>
         </encoder>
     </appender>
 
-    <root level="INFO">
-        <appender-ref ref="STDOUT"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/application-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss:SSS} [%thread] %-5level %logger{40} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level = "DEBUG">
+        <appender-ref ref="CONSOLE"></appender-ref>
+        <!--        <appender-ref ref="FILE"></appender-ref>-->
     </root>
+
 
 </configuration>

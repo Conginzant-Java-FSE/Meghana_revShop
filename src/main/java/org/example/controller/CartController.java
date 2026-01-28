@@ -22,7 +22,7 @@ public class CartController {
             List<CartItem> items = service.items(cartId);
 
             if(items.isEmpty()){
-                System.out.println("\n🛒 No cart items.");
+                System.out.println("\n No cart items.");
             }
 
             System.out.println("""
