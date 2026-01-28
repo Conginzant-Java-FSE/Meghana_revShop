@@ -1,0 +1,4 @@
+09:59:10:056 [main] INFO  org.example.dao.BuyerDao - Buyer login success buyerId=1
+10:00:25:000 [main] INFO  org.example.service.NotificationService - Notify buyerId=1 msg=Order placed successfully! Order ID: 29
+10:00:25:023 [main] INFO  org.example.service.NotificationService - Notify sellerId=1 msg=New order received. Order ID: 29
+10:00:25:075 [main] INFO  org.example.service.OrderService - Order completed buyerId=1 orderId=29
