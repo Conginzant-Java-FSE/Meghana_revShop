@@ -45,7 +45,6 @@ public class Product {
     public int getStockQuantity() { return stockQuantity; }
     public void setStockQuantity(int stockQuantity) { this.stockQuantity = stockQuantity; }
 
-    // ===== threshold =====
     public int getStockThreshold() { return stockThreshold; }
     public void setStockThreshold(int stockThreshold) { this.stockThreshold = stockThreshold; }
 

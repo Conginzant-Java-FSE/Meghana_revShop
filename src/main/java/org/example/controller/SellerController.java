@@ -12,11 +12,16 @@ import org.example.service.OrderService;
 import org.example.service.PaymentService;
 import org.example.service.ProductService;
 import org.example.service.ReviewService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class SellerController {
+
+    private static final Logger log =
+            LoggerFactory.getLogger(SellerController.class);
 
     private final ProductService productService = new ProductService();
     private final CategoryDao categoryDao = new CategoryDao();
@@ -29,6 +34,8 @@ public class SellerController {
     private final Scanner sc = new Scanner(System.in);
 
     public void dashboard(Seller seller){
+
+        log.info("Seller logged in sellerId={}", seller.getSellerId());
 
         while(true){
 
@@ -67,12 +74,14 @@ public class SellerController {
                 case 6 -> showNotifications(seller);
                 case 7 -> showProductReviews(seller);
                 case 8 -> showInventoryAlerts(seller);
-                case 0 -> { return; }
+                case 0 -> {
+                    log.info("Seller logged out sellerId={}", seller.getSellerId());
+                    return;
+                }
                 default -> System.out.println("Invalid option");
             }
         }
     }
-
 
     private void viewProducts(Seller seller){
 
@@ -96,6 +105,11 @@ public class SellerController {
     private void addProduct(Seller seller){
 
         List<Category> cats = categoryDao.getAllCategories();
+
+        if(cats.isEmpty()){
+            System.out.println("No categories available");
+            return;
+        }
 
         System.out.println("\nCATEGORIES:");
         for(Category c:cats){
@@ -129,6 +143,7 @@ public class SellerController {
 
         boolean ok = productService.addProduct(p);
 
+        log.info("Seller add product sellerId={} success={}", seller.getSellerId(), ok);
         System.out.println(ok?"Product Added":"Failed");
     }
 
@@ -164,6 +179,9 @@ public class SellerController {
 
         boolean ok = productService.updateProduct(seller.getSellerId(),p);
 
+        log.info("Seller update product sellerId={} productId={} success={}",
+                seller.getSellerId(), p.getProductId(), ok);
+
         System.out.println(ok?"Updated":"Failed");
     }
 
@@ -176,9 +194,11 @@ public class SellerController {
 
         boolean ok = productService.deleteProduct(seller.getSellerId(),id);
 
+        log.info("Seller delete product sellerId={} productId={} success={}",
+                seller.getSellerId(), id, ok);
+
         System.out.println(ok?"Deleted":"Failed");
     }
-
 
     private void viewOrders(Seller seller){
 
@@ -198,10 +218,16 @@ public class SellerController {
         }
     }
 
-
     private void showNotifications(Seller seller){
-        notificationService.getSellerNotifications(seller.getSellerId())
-                .forEach(n -> System.out.println(n.getMessage()));
+
+        var list = notificationService.getSellerNotifications(seller.getSellerId());
+
+        if(list.isEmpty()){
+            System.out.println("No notifications");
+            return;
+        }
+
+        list.forEach(n -> System.out.println(n.getMessage()));
     }
 
     private void showProductReviews(Seller seller){
@@ -215,13 +241,11 @@ public class SellerController {
 
         for(Review r:list){
             System.out.println("\nProduct: "+r.getProductName());
-            System.out.println("Buyer: "+r.getBuyerName());
             System.out.println("Rating: "+r.getRating());
             System.out.println("Comment: "+r.getComment());
             System.out.println("-----");
         }
     }
-
 
     private void showInventoryAlerts(Seller seller){
 

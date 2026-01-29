@@ -57,7 +57,9 @@ public class OrderService {
         Integer orderId = orderDao.createOrder(order);
         if (orderId == null) return "Order failed";
 
-        boolean paid = paymentService.processPayment(buyerId, orderId, total, paymentMethod);
+        boolean paid =
+                paymentService.processPayment(buyerId, orderId, total, paymentMethod);
+
         if (!paid) return "Payment failed";
 
         for (CartItem ci : cartItems) {
@@ -65,19 +67,33 @@ public class OrderService {
             if (!orderDao.reduceStock(ci.getProductId(), ci.getQuantity()))
                 return "Stock failed";
 
-            paymentService.settleSeller(ci.getSellerId(), ci.getQuantity() * ci.getPrice());
+            paymentService.settleSeller(
+                    ci.getSellerId(),
+                    ci.getQuantity() * ci.getPrice()
+            );
+        }
 
-            inventoryService.checkAndNotifyLowStock(ci.getSellerId(), ci.getProductId());
+        for (CartItem ci : cartItems) {
+            inventoryService.checkAndNotifyLowStock(
+                    ci.getSellerId(),
+                    ci.getProductId()
+            );
         }
 
         orderDao.createOrderItems(orderId, cartItems);
 
-        notificationService.notifyBuyer(buyerId,"Order placed successfully! Order ID: " + orderId);
+        notificationService.notifyBuyer(
+                buyerId,
+                "Order placed successfully! Order ID: " + orderId
+        );
 
-        Set<Integer> sellers=new HashSet<>();
-        for(CartItem ci:cartItems){
-            if(sellers.add(ci.getSellerId())){
-                notificationService.notifySeller(ci.getSellerId(),"New order received. Order ID: " + orderId);
+        Set<Integer> sellers = new HashSet<>();
+        for (CartItem ci : cartItems) {
+            if (sellers.add(ci.getSellerId())) {
+                notificationService.notifySeller(
+                        ci.getSellerId(),
+                        "New order received. Order ID: " + orderId
+                );
             }
         }
 

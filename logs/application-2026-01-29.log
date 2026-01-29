@@ -1,0 +1,133 @@
+18:27:24:096 [main] INFO  org.example.controller.AuthController - Buyer registration email=lalli@gmail.com success=true
+18:31:18:775 [main] INFO  org.example.controller.AuthController - Buyer login attempt email=lalli@gmail.com success=true
+18:36:28:153 [main] INFO  org.example.controller.AuthController - Buyer login attempt email=lalli@gmail.com success=true
+20:14:34:737 [main] INFO  org.example.controller.AuthController - Buyer registration email=mark@gmail.com success=true
+20:14:54:567 [main] INFO  org.example.controller.AuthController - Buyer login attempt email=mark@gmail.com success=true
+20:15:11:909 [main] INFO  org.example.controller.AuthController - Buyer reset password email=mark@123 success=false
+20:15:29:859 [main] INFO  org.example.controller.AuthController - Buyer reset password email=mark@gmail.com success=true
+20:15:35:817 [main] INFO  org.example.controller.AuthController - Buyer forgot email phone= found=true
+21:22:50:818 [main] INFO  org.example.controller.AuthController - Buyer registered successfully email=novah@gmail.com
+21:23:12:331 [main] INFO  org.example.controller.AuthController - Buyer login attempt email=novah@gmail.com success=true
+21:23:23:787 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=18
+21:23:54:026 [main] INFO  org.example.service.RecoveryService - Buyer password reset buyerId=18 success=true
+21:23:54:027 [main] INFO  org.example.controller.AuthController - Buyer reset password email=novah@gmail.com success=true
+21:24:05:404 [main] INFO  org.example.service.RecoveryService - Buyer forgot email success buyerId=18
+21:24:05:404 [main] INFO  org.example.controller.AuthController - Buyer forgot email phone=777 success=true
+21:24:21:355 [main] INFO  org.example.controller.AuthController - Buyer login attempt email=novah@gmail.com success=false
+21:28:13:874 [main] INFO  org.example.controller.AuthController - Buyer login attempt email=novah success=false
+22:03:26:462 [main] INFO  org.example.service.AuthService - Buyer registration email=olive@gmail.com success=true
+22:03:26:465 [main] INFO  org.example.controller.AuthController - Buyer registration email=olive@gmail.com success=true
+22:19:21:415 [main] INFO  org.example.service.AuthService - Buyer registration email=peter@gmail.com success=true
+22:19:36:207 [main] INFO  org.example.controller.AuthController - Buyer registered successfully email=peter@gmail.com
+22:19:52:597 [main] INFO  org.example.controller.AuthController - Buyer login success email=peter@gmail.com
+22:19:58:298 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=20
+22:20:21:489 [main] INFO  org.example.service.RecoveryService - Buyer password reset buyerId=20 success=true
+22:20:37:975 [main] WARN  org.example.service.RecoveryService - Buyer forgot email failed security verification buyerId=20
+22:42:50:092 [main] INFO  org.example.service.AuthService - Buyer registration email=rose@gmail.com success=true
+22:42:55:333 [main] INFO  org.example.controller.AuthController - Buyer registered successfully email=rose@gmail.com
+22:43:09:882 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+22:43:18:724 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=21
+22:43:35:026 [main] INFO  org.example.service.RecoveryService - Buyer password reset buyerId=21 success=true
+22:43:44:683 [main] INFO  org.example.service.RecoveryService - Buyer forgot email success buyerId=21
+22:43:52:890 [main] INFO  org.example.controller.AuthController - Buyer login failed email=rose
+22:44:05:251 [main] INFO  org.example.controller.AuthController - Buyer login failed email=rose@gmail.com
+22:44:18:471 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+22:44:25:937 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=21
+22:45:44:349 [main] INFO  org.example.service.AuthService - Seller registration email=rebecca@gmail.com success=true
+22:45:51:505 [main] INFO  org.example.controller.AuthController - Seller registered successfully email=rebecca@gmail.com
+22:46:13:567 [main] INFO  org.example.controller.AuthController - Seller login success email=rebecca@gmail.com
+22:46:13:567 [main] INFO  org.example.controller.SellerController - Seller logged in sellerId=8
+22:46:13:595 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=8 balance=0.0
+22:46:24:200 [main] INFO  org.example.controller.SellerController - Seller logged out sellerId=8
+22:46:39:432 [main] INFO  org.example.controller.AuthController - Seller login failed email=rebecca
+23:02:15:760 [main] INFO  org.example.service.AuthService - Seller registration email=sam@gmail.com success=true
+23:02:21:347 [main] INFO  org.example.controller.AuthController - Seller registered successfully email=sam@gmail.com
+23:02:54:067 [main] INFO  org.example.controller.AuthController - Seller login success email=sam@gmail.com
+23:02:54:067 [main] INFO  org.example.controller.SellerController - Seller logged in sellerId=9
+23:02:54:117 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:02:59:780 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:03:34:407 [main] INFO  org.example.controller.SellerController - Seller add product sellerId=9 success=true
+23:03:34:435 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:04:36:485 [main] INFO  org.example.controller.SellerController - Seller update product sellerId=9 productId=41 success=true
+23:04:36:510 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:04:41:415 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:05:20:168 [main] INFO  org.example.controller.SellerController - Seller add product sellerId=9 success=true
+23:05:20:215 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:05:28:057 [main] INFO  org.example.controller.SellerController - Seller delete product sellerId=9 productId=42 success=true
+23:05:28:084 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:05:32:196 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:05:40:310 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=0.0
+23:05:47:173 [main] INFO  org.example.controller.SellerController - Seller logged out sellerId=9
+23:06:42:923 [main] INFO  org.example.controller.AuthController - Buyer login failed email=rebecca@gmail.com
+23:07:59:709 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+23:10:47:315 [main] WARN  org.example.service.PaymentService - UPI payment failed invalid pin buyerId=21
+23:30:25:524 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+23:31:07:950 [main] INFO  org.example.service.PaymentService - UPI payment processed buyerId=21 orderId=34 success=true
+23:31:08:053 [main] INFO  org.example.service.PaymentService - Seller wallet credited sellerId=9 amount=750.0
+23:31:08:263 [main] INFO  org.example.service.OrderService - Order completed buyerId=21 orderId=34
+23:32:21:668 [main] INFO  org.example.service.NotificationService - Fetching notifications for buyerId=21
+23:32:34:320 [main] INFO  org.example.service.NotificationService - Fetching notifications for buyerId=21
+23:33:08:155 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=21
+23:33:31:624 [main] INFO  org.example.controller.AuthController - Seller login success email=sam@gmail.com
+23:33:31:624 [main] INFO  org.example.controller.SellerController - Seller logged in sellerId=9
+23:33:31:655 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:33:47:449 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:33:55:264 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:34:08:978 [main] INFO  org.example.service.NotificationService - Fetching notifications for sellerId=9
+23:34:09:034 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:34:16:028 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:34:37:460 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:34:49:089 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:35:46:254 [main] INFO  org.example.controller.SellerController - Seller update product sellerId=9 productId=41 success=true
+23:35:46:279 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:35:50:972 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:36:00:121 [main] INFO  org.example.controller.SellerController - Seller logged out sellerId=9
+23:36:45:911 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+23:37:23:888 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=21
+23:37:50:475 [main] INFO  org.example.controller.AuthController - Seller login success email=sam@gmail.com
+23:37:50:475 [main] INFO  org.example.controller.SellerController - Seller logged in sellerId=9
+23:37:50:519 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:38:05:171 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:39:01:637 [main] INFO  org.example.controller.SellerController - Seller update product sellerId=9 productId=41 success=true
+23:39:01:667 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:39:07:494 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=750.0
+23:39:10:909 [main] INFO  org.example.controller.SellerController - Seller logged out sellerId=9
+23:39:25:387 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+23:40:22:066 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+23:40:51:597 [main] INFO  org.example.service.PaymentService - Card payment processed buyerId=21 orderId=35 success=true
+23:40:51:729 [main] INFO  org.example.service.PaymentService - Seller wallet credited sellerId=9 amount=1500.0
+23:40:51:902 [main] INFO  org.example.service.OrderService - Order completed buyerId=21 orderId=35
+23:41:00:633 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=21
+23:41:12:800 [main] INFO  org.example.controller.AuthController - Seller login success email=sam@gmail.com
+23:41:12:800 [main] INFO  org.example.controller.SellerController - Seller logged in sellerId=9
+23:41:12:820 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=2250.0
+23:41:16:656 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=2250.0
+23:41:26:343 [main] INFO  org.example.service.NotificationService - Fetching notifications for sellerId=9
+23:41:26:395 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=2250.0
+23:41:30:648 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=2250.0
+23:41:39:494 [main] INFO  org.example.controller.SellerController - Seller logged out sellerId=9
+23:48:47:378 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+23:49:08:243 [main] INFO  org.example.service.PaymentService - COD selected buyerId=21 orderId=36
+23:49:38:606 [main] INFO  org.example.service.PaymentService - COD selected buyerId=21 orderId=37
+23:50:36:660 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=21
+23:50:48:879 [main] INFO  org.example.controller.AuthController - Seller login success email=sam@gmail.com
+23:50:48:879 [main] INFO  org.example.controller.SellerController - Seller logged in sellerId=9
+23:50:48:899 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=2250.0
+23:50:51:250 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=2250.0
+23:52:18:447 [main] INFO  org.example.controller.SellerController - Seller update product sellerId=9 productId=41 success=true
+23:52:18:469 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=2250.0
+23:52:23:278 [main] INFO  org.example.controller.SellerController - Seller logged out sellerId=9
+23:52:38:584 [main] INFO  org.example.controller.AuthController - Buyer login success email=rose@gmail.com
+23:53:16:822 [main] INFO  org.example.service.PaymentService - COD selected buyerId=21 orderId=38
+23:53:16:877 [main] INFO  org.example.service.PaymentService - Seller wallet credited sellerId=9 amount=1798.0
+23:53:16:903 [main] INFO  org.example.dao.ProductDao - lowStockProducts fetched sellerId=9 count=0
+23:53:17:043 [main] INFO  org.example.service.OrderService - Order completed buyerId=21 orderId=38
+23:53:22:195 [main] INFO  org.example.controller.BuyerController - Buyer logged out buyerId=21
+23:53:34:599 [main] INFO  org.example.controller.AuthController - Buyer login failed email=sam@gmail.com
+23:54:05:610 [main] INFO  org.example.controller.AuthController - Seller login success email=sam@gmail.com
+23:54:05:610 [main] INFO  org.example.controller.SellerController - Seller logged in sellerId=9
+23:54:05:634 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=4048.0
+23:54:10:223 [main] INFO  org.example.service.NotificationService - Fetching notifications for sellerId=9
+23:54:10:274 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=4048.0
+23:54:16:991 [main] INFO  org.example.dao.ProductDao - lowStockProducts fetched sellerId=9 count=0
+23:54:17:019 [main] INFO  org.example.service.PaymentService - Fetched seller balance sellerId=9 balance=4048.0

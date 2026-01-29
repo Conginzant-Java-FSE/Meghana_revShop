@@ -10,23 +10,27 @@ public class InventoryService {
     private final ProductDao productDao = new ProductDao();
     private final NotificationService notificationService = new NotificationService();
 
-    public List<Product> lowStockProducts(int sellerId){
-        return productDao.lowStockProducts(sellerId);
-    }
+    public void checkAndNotifyLowStock(int sellerId, int productId) {
 
-    public void checkAndNotifyLowStock(int sellerId,int productId){
+        List<Product> lowStockList = productDao.lowStockProducts(sellerId);
 
-        List<Product> low = productDao.lowStockProducts(sellerId);
+        for (Product p : lowStockList) {
 
-        for(Product p:low){
-            if(p.getProductId()==productId){
+            if (p.getProductId() == productId) {
+
                 notificationService.notifySeller(
                         sellerId,
-                        "LOW STOCK ALERT: "+p.getProductName()+
-                                " Remaining="+p.getStockQuantity()+
-                                " Threshold="+p.getStockThreshold()
+                        "LOW STOCK ALERT: " + p.getProductName()
+                                + " | Remaining: " + p.getStockQuantity()
+                                + " | Threshold: " + p.getStockThreshold()
                 );
+
+                break;
             }
         }
+    }
+
+    public List<Product> lowStockProducts(int sellerId) {
+        return productDao.lowStockProducts(sellerId);
     }
 }

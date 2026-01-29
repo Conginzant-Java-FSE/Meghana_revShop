@@ -10,12 +10,16 @@ import org.slf4j.LoggerFactory;
 
 public class AuthService {
 
-    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+    private static final Logger log =
+            LoggerFactory.getLogger(AuthService.class);
 
     private final BuyerDao buyerDao = new BuyerDao();
     private final SellerDao sellerDao = new SellerDao();
 
-    public boolean registerBuyer(String name, String email, String password, String phone) {
+    public boolean registerBuyer(String name,
+                                 String email,
+                                 String password,
+                                 String phone) {
 
         Buyer b = new Buyer();
         b.setFullName(name);
@@ -24,10 +28,15 @@ public class AuthService {
         b.setPhone(phone);
 
         Integer id = buyerDao.registerBuyerAndGetId(b);
+        log.info("Buyer registration email={} success={}", email, id != null);
         return id != null;
     }
 
-    public boolean registerSeller(String biz, String owner, String email, String password, String phone) {
+    public boolean registerSeller(String biz,
+                                  String owner,
+                                  String email,
+                                  String password,
+                                  String phone) {
 
         Seller s = new Seller();
         s.setBusinessName(biz);
@@ -37,6 +46,7 @@ public class AuthService {
         s.setPhone(phone);
 
         Integer id = sellerDao.registerSellerAndGetId(s);
+        log.info("Seller registration email={} success={}", email, id != null);
         return id != null;
     }
 
@@ -47,36 +57,20 @@ public class AuthService {
     public Seller sellerLogin(String email, String password) {
         return sellerDao.loginSeller(email, password);
     }
-    public Buyer registerBuyerReturnBuyer(String name,String email,String pwd,String phone){
 
-        Buyer b=new Buyer(name,email,
-                PasswordUtil.hashPassword(pwd),phone);
-
-        Integer id=buyerDao.registerBuyerAndGetId(b);
-        if(id==null) return null;
-
-        b.setBuyerId(id);
-        return b;
+    public Integer findBuyerIdByEmail(String email) {
+        return buyerDao.findBuyerIdByEmail(email);
     }
 
-    public Seller registerSellerReturnSeller(String biz,String owner,String email,String pwd,String phone){
-
-        Seller s=new Seller();
-        s.setBusinessName(biz);
-        s.setOwnerName(owner);
-        s.setEmail(email);
-        s.setPassword(PasswordUtil.hashPassword(pwd));
-        s.setPhone(phone);
-
-        Integer id=sellerDao.registerSellerAndGetId(s);
-        if(id==null) return null;
-
-        s.setSellerId(id);
-        return s;
+    public Integer findSellerIdByEmail(String email) {
+        return sellerDao.findSellerIdByEmail(email);
     }
 
-    public String findBuyerEmailByPhone(String phone){
+    public String findBuyerEmailByPhone(String phone) {
         return buyerDao.findEmailByPhone(phone);
     }
 
+    public String findSellerEmailByPhone(String phone) {
+        return sellerDao.findSellerEmailByPhone(phone);
+    }
 }

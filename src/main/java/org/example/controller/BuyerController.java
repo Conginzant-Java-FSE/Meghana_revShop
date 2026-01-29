@@ -57,13 +57,21 @@ public class BuyerController {
                 case 6 -> reviewController.reviewMenu(buyer);
                 case 7 -> notificationController.buyerNotifications(buyer);
                 case 8 -> favoriteController.menu(buyer);
-                case 0 -> { return; }
-                default -> System.out.println("Invalid");
+                case 0 -> {
+                    log.info("Buyer logged out buyerId={}", buyer.getBuyerId());
+                    return;
+                }
+                default -> System.out.println("Invalid option");
             }
         }
     }
 
     private void showProducts(Buyer buyer, List<Product> list) {
+
+        if (list == null || list.isEmpty()) {
+            System.out.println("No products available");
+            return;
+        }
 
         for (Product p : list) {
             System.out.println("--------------------------------");
@@ -95,8 +103,15 @@ public class BuyerController {
 
     private void browseByCategory(Buyer buyer) {
 
-        productService.getCategories().forEach(c ->
-                System.out.println(c.getCategoryId() + "-" + c.getCategoryName()));
+        var categories = productService.getCategories();
+
+        if (categories.isEmpty()) {
+            System.out.println("No categories available");
+            return;
+        }
+
+        categories.forEach(c ->
+                System.out.println(c.getCategoryId() + " - " + c.getCategoryName()));
 
         System.out.print("Select Category ID: ");
 
@@ -108,14 +123,33 @@ public class BuyerController {
             return;
         }
 
-        showProducts(buyer, productService.productsByCategory(cid));
+        List<Product> list = productService.productsByCategory(cid);
+
+        if (list.isEmpty()) {
+            System.out.println("No products found in this category");
+            return;
+        }
+
+        showProducts(buyer, list);
     }
 
     private void search(Buyer buyer) {
 
         System.out.print("Enter search keyword: ");
-        String k = sc.nextLine();
+        String key = sc.nextLine().trim();
 
-        showProducts(buyer, productService.searchProducts(k));
+        if (key.isEmpty()) {
+            System.out.println("Search keyword cannot be empty");
+            return;
+        }
+
+        List<Product> list = productService.searchProducts(key);
+
+        if (list.isEmpty()) {
+            System.out.println("No such products found");
+            return;
+        }
+
+        showProducts(buyer, list);
     }
 }

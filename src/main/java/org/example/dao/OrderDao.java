@@ -7,6 +7,7 @@ import org.example.models.OrderItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class OrderDao {
         String sql =
                 "INSERT INTO orders(buyer_id,total_amount,payment_method,shipping_address,billing_address) VALUES(?,?,?,?,?)";
 
-        try (var con = DBConnection.getConnection();
+        try (Connection con = DBConnection.getConnection();
              var ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, o.getBuyerId());
@@ -43,23 +44,53 @@ public class OrderDao {
 
     public boolean reduceStock(int productId, int qty) {
 
-        String sql="""
-        UPDATE product
-        SET stock_quantity=stock_quantity-?
-        WHERE product_id=? AND stock_quantity>=?
-        """;
+        String lockSql =
+                "SELECT stock_quantity FROM product WHERE product_id=? FOR UPDATE";
 
-        try(var con=DBConnection.getConnection();
-            var ps=con.prepareStatement(sql)){
+        String updateSql =
+                "UPDATE product SET stock_quantity=? WHERE product_id=?";
 
-            ps.setInt(1,qty);
-            ps.setInt(2,productId);
-            ps.setInt(3,qty);
+        try (Connection con = DBConnection.getConnection()) {
 
-            return ps.executeUpdate()>0;
+            con.setAutoCommit(false);
 
-        }catch(Exception e){
-            log.error("reduceStock failed",e);
+            int currentStock;
+
+            try (var lockPs = con.prepareStatement(lockSql)) {
+                lockPs.setInt(1, productId);
+                var rs = lockPs.executeQuery();
+
+                if (!rs.next()) {
+                    con.rollback();
+                    return false;
+                }
+
+                currentStock = rs.getInt(1);
+            }
+
+            if (currentStock < qty) {
+                con.rollback();
+                log.warn("reduceStock failed insufficient stock productId={} requested={} available={}",
+                        productId, qty, currentStock);
+                return false;
+            }
+
+            int newStock = currentStock - qty;
+
+            try (var updatePs = con.prepareStatement(updateSql)) {
+                updatePs.setInt(1, newStock);
+                updatePs.setInt(2, productId);
+                updatePs.executeUpdate();
+            }
+
+            con.commit();
+            log.info("Stock reduced productId={} oldStock={} newStock={}",
+                    productId, currentStock, newStock);
+
+            return true;
+
+        } catch (Exception e) {
+            log.error("reduceStock failed", e);
         }
 
         return false;
@@ -110,14 +141,14 @@ public class OrderDao {
         ORDER BY oi.order_id DESC
         """;
 
-        try(var con=DBConnection.getConnection();
-            var ps=con.prepareStatement(sql)){
+        try (var con = DBConnection.getConnection();
+             var ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1,sellerId);
-            var rs=ps.executeQuery();
+            ps.setInt(1, sellerId);
+            var rs = ps.executeQuery();
 
-            while(rs.next()){
-                OrderItem oi=new OrderItem();
+            while (rs.next()) {
+                OrderItem oi = new OrderItem();
                 oi.setOrderId(rs.getInt(1));
                 oi.setProductName(rs.getString(2));
                 oi.setQuantity(rs.getInt(3));
@@ -125,12 +156,13 @@ public class OrderDao {
                 list.add(oi);
             }
 
-        }catch(Exception e){
-            log.error("getOrdersForSeller failed",e);
+        } catch (Exception e) {
+            log.error("getOrdersForSeller failed", e);
         }
 
         return list;
     }
+
     public List<Order> getOrdersByBuyer(int buyerId) {
 
         List<Order> list = new ArrayList<>();
@@ -152,23 +184,27 @@ public class OrderDao {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("getOrdersByBuyer failed", e);
         }
 
         return list;
     }
-
 
     public List<OrderItem> getOrderItems(int orderId) {
 
         List<OrderItem> list = new ArrayList<>();
 
         String sql = """
-        SELECT oi.quantity,oi.line_total,p.product_name
+        SELECT 
+            oi.quantity,
+            oi.line_total,
+            p.product_name,
+            s.business_name
         FROM order_item oi
-        JOIN product p ON oi.product_id=p.product_id
-        WHERE oi.order_id=?
-        """;
+        JOIN product p ON oi.product_id = p.product_id
+        JOIN seller s ON oi.seller_id = s.seller_id
+        WHERE oi.order_id = ?
+    """;
 
         try (var con = DBConnection.getConnection();
              var ps = con.prepareStatement(sql)) {
@@ -179,6 +215,7 @@ public class OrderDao {
             while (rs.next()) {
                 OrderItem oi = new OrderItem();
                 oi.setProductName(rs.getString("product_name"));
+                oi.setSellerName(rs.getString("business_name")); // ✅ FIX
                 oi.setQuantity(rs.getInt("quantity"));
                 oi.setLineTotal(rs.getDouble("line_total"));
                 list.add(oi);
@@ -190,21 +227,24 @@ public class OrderDao {
 
         return list;
     }
-    public boolean isBelowThreshold(int productId){
 
-        try(var con=DBConnection.getConnection();
-            var ps=con.prepareStatement("""
-        SELECT stock_quantity<=stock_threshold
-        FROM product WHERE product_id=?
-        """)){
 
-            ps.setInt(1,productId);
-            var rs=ps.executeQuery();
-            if(rs.next()) return rs.getBoolean(1);
+    public boolean isBelowThreshold(int productId) {
 
-        }catch(Exception e){}
+        try (var con = DBConnection.getConnection();
+             var ps = con.prepareStatement("""
+             SELECT stock_quantity <= stock_threshold
+             FROM product WHERE product_id=?
+             """)) {
+
+            ps.setInt(1, productId);
+            var rs = ps.executeQuery();
+            if (rs.next()) return rs.getBoolean(1);
+
+        } catch (Exception e) {
+            log.error("isBelowThreshold failed", e);
+        }
 
         return false;
     }
-
 }
